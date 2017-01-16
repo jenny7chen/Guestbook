@@ -1,6 +1,6 @@
 <?php
 
-require_once 'db_config.php';
+require_once 'DBSetting.php';
 $dbSetting = new DBSetting();
 try {
     $dbh = new PDO("mysql:host=$dbSetting->host;dbname=$dbSetting->dbname;port=$dbSetting->port", $dbSetting->user1, $dbSetting->user1pass);

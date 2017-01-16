@@ -100,7 +100,7 @@ CLEAR_BTN;
 
     function fetchPostsFromDB()
     {
-        require_once 'db_config.php';
+        require_once 'DBSetting.php';
         $dbSetting = new DBSetting();
         try {
             $pdo = new PDO("mysql:host=$dbSetting->host;dbname=$dbSetting->dbname;port=$dbSetting->port", $dbSetting->user1, $dbSetting->user1pass);
@@ -131,7 +131,7 @@ CLEAR_BTN;
 
     function clearAllPost()
     {
-        require_once 'db_config.php';
+        require_once 'DBSetting.php';
         $dbSetting = new DBSetting();
         try {
             $pdo = new PDO("mysql:host=$dbSetting->host;dbname=$dbSetting->dbname;port=$dbSetting->port", $dbSetting->user1, $dbSetting->user1pass);
@@ -148,7 +148,7 @@ CLEAR_BTN;
 
     function deletePostById($id)
     {
-        require_once 'db_config.php';
+        require_once 'DBSetting.php';
         $dbSetting = new DBSetting();
         try {
             $pdo = new PDO("mysql:host=$dbSetting->host;dbname=$dbSetting->dbname;port=$dbSetting->port", $dbSetting->user1, $dbSetting->user1pass);

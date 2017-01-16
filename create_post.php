@@ -30,7 +30,7 @@
 
       function createNewPost($title, $content)
       {
-          require_once 'db_config.php';
+          require_once 'DBSetting.php';
           $dbSetting = new DBSetting();
           $filePath = '';
           $todaysDate = date('Y-m-d H:i:s');

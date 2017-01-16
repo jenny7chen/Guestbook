@@ -19,7 +19,7 @@
       } elseif (lengthIsOver($_POST['name'], $_POST['password'])) {
           echo '帳號或密碼長度超過了，帳號最多30字，密碼最多8字';
       } else {
-          require_once 'db_config.php';
+          require_once 'DBSetting.php';
           $dbSetting = new DBSetting();
 
           try {
