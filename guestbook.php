@@ -8,7 +8,7 @@
 <body>
   <?php
   require_once 'cookie_setting.php';
-  require_once 'post.php';
+  require_once 'Post.php';
   session_save_path(realpath(dirname($_SERVER['DOCUMENT_ROOT']).'/../session'));
   $cookieSetting = new CookieSetting();
 
@@ -49,16 +49,28 @@ CLEAR_BTN;
         generatePostList();
 
         if (isset($_POST['submit_clear_all']) && !empty($_POST['submit_clear_all']) && $_SESSION['UserName'] == 'admin') {
-            clearAllPost();
+            require_once 'DBPostActions.php';
+            $dbAction = new DBPostActions();
+            $clearAllSuccess = $dbAction->clearAllPost();
+            if($clearAllSuccess){
+              header('Refresh:0');
+            }
         }
 
         if (isset($_POST['submit_delete']) && isset($_POST['post_id']) && !empty($_POST['post_id'])) {
-            deletePostById($_POST['post_id']);
+            require_once 'DBPostActions.php';
+            $dbAction = new DBPostActions();
+            $deleteSuccess = $dbAction->deletePostById($_POST['post_id']);
+            if($deleteSuccess){
+              header('Refresh:0');
+            }
         }
     }
     function generatePostList()
     {
-        $posts = fetchPostsFromDB();
+        require_once 'DBPostActions.php';
+        $dbAction = new DBPostActions();
+        $posts = $dbAction->fetchPostsFromDB();
         $dom = new DOMDocument('1.0', 'utf-8');
         foreach ($posts as $post) {
             appendHTML($dom, $post);
@@ -96,71 +108,6 @@ CLEAR_BTN;
         $wrap = $parent->createElement('div', $node->saveHTML($all));
         $wrap = $parent->importNode($wrap);
         $parent->appendChild($wrap);
-    }
-
-    function fetchPostsFromDB()
-    {
-        require_once 'DBSetting.php';
-        $dbSetting = new DBSetting();
-        try {
-            $pdo = new PDO("mysql:host=$dbSetting->host;dbname=$dbSetting->dbname;port=$dbSetting->port", $dbSetting->user1, $dbSetting->user1pass);
-            $pdo->query('SET NAMES utf8');
-            $sql = 'SELECT * FROM posts ORDER BY creation_time DESC';
-            $sth = $pdo->prepare($sql);
-            $success = $sth->execute();
-            $result = $sth->fetchAll();
-        } catch (PDOException $e) {
-            echo 'fetch post data : '.$e->getMessage();
-        }
-        unset($pdo);
-
-        $postArray = array();
-        foreach ($result as $value) {
-            $post = new Post();
-            $post->content = $value['content'];
-            $post->filePath = $value['filepath'];
-            $post->author = $value['author'];
-            $post->title = $value['title'];
-            $post->id = $value['id'];
-            $post->creation_time = $value['creation_time'];
-            array_push($postArray, $post);
-        }
-
-        return $postArray;
-    }
-
-    function clearAllPost()
-    {
-        require_once 'DBSetting.php';
-        $dbSetting = new DBSetting();
-        try {
-            $pdo = new PDO("mysql:host=$dbSetting->host;dbname=$dbSetting->dbname;port=$dbSetting->port", $dbSetting->user1, $dbSetting->user1pass);
-            $pdo->query('SET NAMES utf8');
-            $sql = 'DELETE FROM posts';
-            $sth = $pdo->prepare($sql);
-            $success = $sth->execute();
-        } catch (PDOException $e) {
-            echo 'delete post data : '.$e->getMessage();
-        }
-        unset($pdo);
-        header('Refresh:0');
-    }
-
-    function deletePostById($id)
-    {
-        require_once 'DBSetting.php';
-        $dbSetting = new DBSetting();
-        try {
-            $pdo = new PDO("mysql:host=$dbSetting->host;dbname=$dbSetting->dbname;port=$dbSetting->port", $dbSetting->user1, $dbSetting->user1pass);
-            $pdo->query('SET NAMES utf8');
-            $sql = "DELETE FROM posts WHERE id=$id";
-            $sth = $pdo->prepare($sql);
-            $success = $sth->execute();
-        } catch (PDOException $e) {
-            echo 'delete post data : '.$e->getMessage();
-        }
-        unset($pdo);
-        header('Refresh:0');
     }
 
     ?>

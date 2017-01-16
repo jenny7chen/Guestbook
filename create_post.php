@@ -25,39 +25,17 @@
       if (!isset($_POST['content']) || empty($_POST['content'])) {
       } elseif (!isset($_POST['title']) || empty($_POST['title'])) {
       } else {
-          createNewPost($_POST['title'], $_POST['content']);
-      }
-
-      function createNewPost($title, $content)
-      {
-          require_once 'DBSetting.php';
-          $dbSetting = new DBSetting();
+          require_once 'DBPostActions.php';
+          $dbAction = new DBPostActions();
           $filePath = '';
           $todaysDate = date('Y-m-d H:i:s');
-          try {
-              $pdo = new PDO("mysql:host=$dbSetting->host;dbname=$dbSetting->dbname;port=$dbSetting->port", $dbSetting->user1, $dbSetting->user1pass);
-              $pdo->query('SET NAMES utf8');
-              $sql = 'INSERT INTO posts (author, creation_time, title, content, filepath) VALUES (:author, :creation_time, :title, :content, :filepath)';
-              $stmt = $pdo->prepare($sql);
-              $stmt->bindParam(':author', $_SESSION['UserName']);
-              $stmt->bindParam(':creation_time', $todaysDate, PDO::PARAM_STR, 10);
-              $stmt->bindParam(':title', $title);
-              $stmt->bindParam(':content', $content);
-              $stmt->bindParam(':filepath', $filePath);
-              $success = $stmt->execute();
-
-              if ($success) {
-                  header('Location:guestbook.php');
-                  exit();
-              } else {
-                  echo '發表失敗，請再試一次';
-                  echo $dbh->errorInfo();
-              }
-              $dbh->close();
-          } catch (PDOException $e) {
-              echo 'create data'.$e->getMessage();
+          $success = $dbAction->createNewPost($_POST['title'], $_POST['content'], $_SESSION['UserName'], $filePath, $todaysDate);
+          if ($success) {
+              header('Location:guestbook.php');
+              exit();
+          } else {
+              echo '發表失敗，請再試一次';
           }
-          unset($pdo);
       }
       ?>
     </div>

@@ -19,29 +19,21 @@
       } elseif (lengthIsOver($_POST['name'], $_POST['password'])) {
           echo '帳號或密碼長度超過了，帳號最多30字，密碼最多8字';
       } else {
-          require_once 'DBSetting.php';
-          $dbSetting = new DBSetting();
+          require_once 'DBAccountActions.php';
+          $action = new DBAccountActions();
+          $success = $action->createUser($_POST['name'], $_POST['password']);
 
-          try {
-              $dbh = new PDO("mysql:host=$dbSetting->host;dbname=$dbSetting->dbname;port=$dbSetting->port", $dbSetting->user1, $dbSetting->user1pass);
-              $stmt = $dbh->prepare('INSERT INTO account (name, password) VALUES (:name, :password)');
-              $stmt->bindParam(':name', $_POST['name']);
-              $stmt->bindParam(':password', $_POST['password']);
-              $success = $stmt->execute();
-              if ($success) {
-                  header('Location:register_success.html');
-                  exit();
-              } else {
-                  echo '註冊失敗，請再試一次';
-              }
-              $dbh->close();
-          } catch (PDOException $e) {
-              echo 'Connection failed: '.$e->getMessage();
+          if ($success) {
+              header('Location:register_success.html');
+              exit();
+          } else {
+              echo '註冊失敗，請再試一次';
           }
       }
   }
-  function lengthIsOver($name, $password){
-    return (strlen($name) > 30 || strlen($password) > 8);
+  function lengthIsOver($name, $password)
+  {
+      return strlen($name) > 30 || strlen($password) > 8;
   }
   ?>
 </div>
