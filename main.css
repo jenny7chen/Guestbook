@@ -1,0 +1,159 @@
+* {
+    font-family: 'Open Sans', monospace;
+}
+
+body {
+    padding: 0;
+    margin: 0px;
+}
+
+.post {
+    border: gray 1px solid;
+    margin: 0 auto;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-top: 10px;
+}
+
+.login_user {
+    margin: 10px;
+    color: white;
+}
+
+#top_bar {
+    border: #80ced6 1px solid;
+    padding-left: : 15px;
+    padding-right: 15px;
+    margin: 0 auto;
+    margin-bottom: 50px;
+    text-align: right;
+    background-color: #80ced6;
+}
+
+.create_title{
+  border: #80ced6 1px solid;
+  padding-left: : 15px;
+  padding-right: 15px;
+  margin: 0 auto;
+  background-color: #80ced6;
+}
+
+.create_title_text{
+  margin: 20px;
+  color: white;
+}
+
+.create_text {
+    width: 100%;
+    font-size:24px;
+    height: 50%;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    box-sizing: border-box;
+    font-size:20px;
+    resize: none;
+    border: 1px solid #80ced6;
+}
+
+.create_text:focus {
+    border: 1px solid #80ced6;
+    box-shadow: 0 0 2px #80ced6;
+}
+
+.right_btn{
+    background: #80ced6;
+    width: 70px;
+    height: 30px;
+    border: 0px;
+    border-radius: 4px;
+    color: #fff;
+    outline: none;
+    cursor: pointer;
+    float: right;
+    margin: 15px;
+    text-align: center;
+}
+
+.post_delete_text{
+  color: white;
+}
+
+.create_form{
+  border: #80ced6 1px solid;
+  margin: 0 auto;
+}
+
+#edit {
+    border: #80ced6 1px solid;
+    width: 30%;
+    margin: 0 auto;
+    margin-top: 30px;
+    overflow: hidden
+}
+
+#edit_bg{
+  background-color: #f0f0f0;
+}
+
+#content{
+  width: 40%;
+  margin: 0 auto;
+}
+
+.post_title{
+  font-size: 20px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  margin-top: 15px;
+  margin-bottom: 5px;
+}
+
+.post_time{
+  font-size: 10px;
+  margin-top: 0px;
+}
+
+.post_content{
+  font-size: 14px;
+}
+
+.button {
+    background: #80ced6;
+    width: 100px;
+    height: 30px;
+    border: 0px;
+    border-radius: 4px;
+    color: #fff;
+    outline: none;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin: 0 auto;
+}
+
+.clear_button{
+  display: table-cell;
+  vertical-align: middle;
+  font: 11px BlinkMacSystemFont;
+  text-align: center;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+#register_success{
+  text-align: center;
+  margin-top: 20px;
+}
+
+/*#edit_text{
+  margin: 0 auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-style: hidden;
+  width: inherit;
+  height: inherit;
+}*/
+
+#edit_submit_btn {}
