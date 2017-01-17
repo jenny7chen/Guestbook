@@ -54,12 +54,31 @@ body {
     box-sizing: border-box;
     font-size: 20px;
     resize: none;
-    border: 1px solid #80ced6;
+    border-top: 1px solid #80ced6;
+    border-bottom: 1px solid #80ced6;
+    border-left: none;
+    border-right: none;
 }
 
 .create_text:focus {
     border: 1px solid #80ced6;
     box-shadow: 0 0 2px #80ced6;
+}
+
+.create_form {
+    border: #80ced6 1px solid;
+    margin: 0 auto;
+    background-color: white;
+}
+
+.edit_title{
+  width: 100%;
+  height: 5%;
+  font-size: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .right_btn {
@@ -89,15 +108,6 @@ body {
     color: white;
 }
 
-.create_form {
-    border: #80ced6 1px solid;
-    margin: 0 auto;
-    background-color: white;
-}
-
-.edit_title{
-  width: 100%;
-}
 
 #edit {
     background-color: white;
@@ -161,15 +171,3 @@ body {
     text-align: center;
     margin-top: 20px;
 }
-
-
-/*#edit_text{
-  margin: 0 auto;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  border-style: hidden;
-  width: inherit;
-  height: inherit;
-}*/
-
-#edit_submit_btn {}
