@@ -2,7 +2,7 @@
 <head>
   <meta charset="utf-8">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-  <link href="main.css?version=1" rel="stylesheet">
+  <link href="main.css?version=2" rel="stylesheet">
   <script type="text/javascript" link="guestbook.js"></script>
 </head>
 <body>
@@ -33,8 +33,8 @@
     <?php
     if ($_SESSION['LoginSuccess']) {
         echo <<< 'CREATE_BTN'
-        <form action="create_post.php" method='post'>
-            <input class="button" type='submit' class="button" name='submit' value='Create a Post'>
+        <form action="edit_post.php" method='post'>
+            <input class="button" type='submit' class="button" name='submit_create' value='Create a Post'>
         </form>
 CREATE_BTN;
 
@@ -62,8 +62,18 @@ CLEAR_BTN;
             $dbAction = new DBPostActions();
             $deleteSuccess = $dbAction->deletePostById($_POST['post_id']);
             if($deleteSuccess){
+
               header('Refresh:0');
             }
+        }
+
+        if(isset($_POST['submit_modify']) && isset($_POST['post_id']) && !empty($_POST['post_id'])){
+          require_once 'DBPostActions.php';
+          $dbAction = new DBPostActions();
+          $deleteSuccess = $dbAction->deletePostById($_POST['post_id']);
+          if($deleteSuccess){
+            header('Refresh:0');
+          }
         }
     }
     function generatePostList()
@@ -75,8 +85,8 @@ CLEAR_BTN;
         foreach ($posts as $post) {
             appendHTML($dom, $post);
         }
-        $hhhh = str_replace('&zwnj;', '', $dom->saveHTML());
-        echo html_entity_decode($hhhh, ENT_NOQUOTES | ENT_HTML401, 'UTF-8');
+        $node = str_replace('&zwnj;', '', $dom->saveHTML());
+        echo html_entity_decode($node, ENT_NOQUOTES | ENT_HTML401, 'UTF-8');
     }
 
     function appendHTML(DOMNode &$parent, Post $post)
@@ -91,23 +101,36 @@ CLEAR_BTN;
         $timeNode = $node->getElementById('text_time');
         $contentNode = $node->getElementById('text_content');
         $deleteBtn = $node->getElementById('post_delete_btn');
-        $postId = $node->getElementById('post_id');
+        $modifyBtn = $node->getElementById('post_modify_btn');
+        $postIdDelete = $node->getElementById('post_id_d');
+        $postIdModify = $node->getElementById('post_id_m');
         $title_text_node = $node->createTextNode("$post->title");
-        $time_text_node = $node->createTextNode($post->author."&nbsppublished on&nbsp$post->creation_time");
+        $formattedTime = getTime($post->update_time);
+        $time_text_node = $node->createTextNode($post->author."&nbsppublished on&nbsp$formattedTime");
         $content_text_node = $node->createTextNode($post->content);
         $titleNode->appendChild($title_text_node);
         $timeNode->appendChild($time_text_node);
         $contentNode->appendChild($content_text_node);
         if ($post->author !== $_SESSION['UserName']) {
             $deleteBtn->setAttribute('style', '‌display:none;');
+            $modifyBtn->setAttribute('style', '‌display:none;');
         } else {
-            $postId->setAttribute('value', $post->id);
+            $postIdDelete->setAttribute('value', $post->id);
+            $postIdModify->setAttribute('value', $post->id);
         }
         $all = $node->getElementById('node');
         $all->setAttribute('id', $post->id);
         $wrap = $parent->createElement('div', $node->saveHTML($all));
         $wrap = $parent->importNode($wrap);
         $parent->appendChild($wrap);
+    }
+
+    function getTime($timeStr){
+      $timestamp = strtotime($timeStr);
+      $dateTime = new DateTime();
+      $dateTime->setTimestamp($timestamp);
+      $dateTime->setTimezone(new DateTimeZone('Asia/Taipei'));
+      return $dateTime->format('Y-m-d H:i:s');
     }
 
     ?>

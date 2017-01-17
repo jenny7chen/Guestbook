@@ -1,8 +1,14 @@
 <div id="node" class='post'>
-    <form action="" method="post">
-        <input id="post_id" type="hidden" name="post_id">
-        <input id="post_delete_btn" class="right_btn" type='submit' name='submit_delete' value='Delete'>
+  <div class="post_actions">
+    <form action="edit_post.php" method="post" class="post_action">
+        <input id="post_id_m" type="hidden" name="post_id">
+        <input id="post_modify_btn" class="button" type='submit' name='submit_modify' value='Edit'>
     </form>
+    <form action="" method="post" class="post_action">
+        <input id="post_id_d" type="hidden" name="post_id">
+        <input id="post_delete_btn" class="button" type='submit' name='submit_delete' value='Delete'>
+    </form>
+  </div>
     <h4 id="text_title" class="post_title"></h3>
       <p id="text_time" class="post_time"></p>
     <p id="text_content" class="post_content"></p>
